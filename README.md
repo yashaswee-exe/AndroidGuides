@@ -14,4 +14,3 @@ Detailed Android modding, rooting & troubleshooting guides are hosted on my GitH
 - ⚙️ [OTA updating with root (KernelSU | Magisk)](../../wiki/OTA-updating-with-root-(KernelSU-%7C-Magisk))
 - 📌 [Root via KernelSU](../../wiki/Root-via-KernelSU)
 - 🧰 [SuperFlasher script for OP13R | Ace5](../../wiki/SuperFlasher-script-for-OP13R-%7C-Ace5)
-
