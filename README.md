@@ -1,6 +1,6 @@
 ## 📚 Android Guides (Wiki Documentation)
 
-All detailed Android modding, rooting & troubleshooting guides are hosted in our GitHub Wiki. Click any link below to explore a specific guide:
+Detailed Android modding, rooting & troubleshooting guides are hosted on my GitHub Wiki. Click any link below to explore a specific guide:
 
 ### 📘 Guides List
 
