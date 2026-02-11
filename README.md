@@ -3,7 +3,7 @@
 Detailed Android modding, rooting & troubleshooting guides are hosted on my GitHub Wiki. Click any link below to explore a specific guide:
 
 ### 📘 Guides List
-
+- ⚙️ [Root using KernelSU Next (WildKernel)](../../wiki/Root-using-KernelSU-Next-(WildKernel))
 - 🔐 [Fix integrity and root detection](../../wiki/Fix-integrity-and-root-detection)
 - 👤 [Hide root detections](../../wiki/Hide-root-detections)
 - 📱 [Fix KotakNEO, iPartner Pro, ICICI iMobile App on Rooted Phone](../../wiki/Fix-KotakNEO-iPartner-Pro-ICICI-iMobile-App-on-Rooted-Phone)
