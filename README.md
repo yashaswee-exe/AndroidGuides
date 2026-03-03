@@ -1,5 +1,8 @@
 ## 📚 Android Guides (Wiki Documentation)
 
+## 📊 Repository Analytics
+- [[Traffic Stats]]
+
 Detailed Android modding, rooting & troubleshooting guides are hosted on my GitHub Wiki. Click any link below to explore a specific guide:
 
 ### 📘 Guides List
