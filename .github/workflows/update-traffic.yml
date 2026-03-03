@@ -1,62 +1,45 @@
-name: Update Repository Traffic Stats
+- name: Generate Dashboard
+  run: |
+    REPO="yashaswee-exe/AndroidGuides"
 
-on:
-  schedule:
-    - cron: '0 */6 * * *'   # Every 6 hours
-  workflow_dispatch:
+    VIEWS=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/views | jq '.count')
 
-jobs:
-  update-traffic:
-    runs-on: ubuntu-latest
+    UNIQUES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/views | jq '.uniques')
 
-    permissions:
-      contents: write
+    CLONES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/clones | jq '.count')
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    UNIQUE_CLONES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/clones | jq '.uniques')
 
-      - name: Install GitHub CLI
-        run: |
-          sudo apt update
-          sudo apt install gh -y
+    cat <<EOF > Dashboard.md
+# 📊 AndroidGuides Analytics Dashboard
 
-      - name: Authenticate GitHub CLI
-        run: |
-          echo "${{ secrets.TRAFFIC_TOKEN }}" | gh auth login --with-token
+> Repository: yashaswee-exe/AndroidGuides  
+> Auto-updated every 6 hours  
 
-      - name: Fetch Traffic Data
-        run: |
-          REPO="yashaswee-exe/AndroidGuides"
+---
 
-          VIEWS=$(gh api repos/$REPO/traffic/views --jq '.count')
-          UNIQUES=$(gh api repos/$REPO/traffic/views --jq '.uniques')
+## 👀 Traffic Overview (Last 14 Days)
 
-          CLONES=$(gh api repos/$REPO/traffic/clones --jq '.count')
-          UNIQUE_CLONES=$(gh api repos/$REPO/traffic/clones --jq '.uniques')
+| Metric | Value |
+|--------|-------|
+| 🔎 Total Views | **$VIEWS** |
+| 👤 Unique Visitors | **$UNIQUES** |
+| 📥 Total Clones | **$CLONES** |
+| 🧑‍💻 Unique Cloners | **$UNIQUE_CLONES** |
 
-          echo "## 📊 Repository Traffic (Last 14 Days)" > Stats.md
-          echo "" >> Stats.md
-          echo "### 👀 Views" >> Stats.md
-          echo "- Total Views: **$VIEWS**" >> Stats.md
-          echo "- Unique Visitors: **$UNIQUES**" >> Stats.md
-          echo "" >> Stats.md
-          echo "### 📥 Clones" >> Stats.md
-          echo "- Total Clones: **$CLONES**" >> Stats.md
-          echo "- Unique Cloners: **$UNIQUE_CLONES**" >> Stats.md
-          echo "" >> Stats.md
-          echo "_Last Updated: $(date -u) UTC_" >> Stats.md
+---
 
-      - name: Clone Wiki
-        run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashaswee-exe/AndroidGuides.wiki.git
+## 📈 Quick Stats
 
-      - name: Update Wiki Page
-        run: |
-          cp Stats.md AndroidGuides.wiki/Traffic-Stats.md
-          cd AndroidGuides.wiki
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add Traffic-Stats.md
-          git commit -m "Auto update traffic stats"
-          git push
+- Views per day (approx): **$((VIEWS / 14))**
+- Clones per day (approx): **$((CLONES / 14))**
+
+---
+
+_Last Updated: $(date -u) UTC_
+
+EOF
