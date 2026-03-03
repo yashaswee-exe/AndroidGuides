@@ -37,6 +37,12 @@ jobs:
           UNIQUE_CLONES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
             https://api.github.com/repos/$REPO/traffic/clones | jq '.uniques // 0')
 
+          #temp
+          echo "Views API raw response:"
+            curl -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+            https://api.github.com/repos/$REPO/traffic/views
+          # temp ends
+
           echo "# 📊 AndroidGuides Analytics Dashboard" > Dashboard.md
           echo "" >> Dashboard.md
           echo "> Repository: yashaswee-exe/AndroidGuides" >> Dashboard.md
