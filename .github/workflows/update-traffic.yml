@@ -2,7 +2,7 @@ name: Update Repository Analytics Dashboard
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */6 * * *'   # Every 6 hours
   workflow_dispatch:
 
 jobs:
@@ -17,59 +17,48 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
 
       - name: Fetch Traffic Data & Generate Dashboard
         run: |
           REPO="yashaswee-exe/AndroidGuides"
 
-          VIEWS=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/views | jq '.count')
+          VIEWS=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+            https://api.github.com/repos/$REPO/traffic/views | jq -r '.count')
 
-          UNIQUES=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/views | jq '.uniques')
+          UNIQUES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+            https://api.github.com/repos/$REPO/traffic/views | jq -r '.uniques')
 
-          CLONES=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/clones | jq '.count')
+          CLONES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+            https://api.github.com/repos/$REPO/traffic/clones | jq -r '.count')
 
-          UNIQUE_CLONES=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/clones | jq '.uniques')
+          UNIQUE_CLONES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+            https://api.github.com/repos/$REPO/traffic/clones | jq -r '.uniques')
 
-          cat <<EOF > Dashboard.md
-# 📊 AndroidGuides Analytics Dashboard
-
-> Repository: yashaswee-exe/AndroidGuides  
-> Auto-updated every 6 hours  
-
----
-
-## 👀 Traffic Overview (Last 14 Days)
-
-| Metric | Value |
-|--------|-------|
-| 🔎 Total Views | **$VIEWS** |
-| 👤 Unique Visitors | **$UNIQUES** |
-| 📥 Total Clones | **$CLONES** |
-| 🧑‍💻 Unique Cloners | **$UNIQUE_CLONES** |
-
----
-
-## 📈 Daily Average (Approx)
-
-| Metric | Per Day |
-|--------|--------|
-| Views | **$((VIEWS / 14))** |
-| Clones | **$((CLONES / 14))** |
-
----
-
-_Last Updated: $(date -u) UTC_
-
-EOF
+          echo "# 📊 AndroidGuides Analytics Dashboard" > Dashboard.md
+          echo "" >> Dashboard.md
+          echo "> Repository: yashaswee-exe/AndroidGuides" >> Dashboard.md
+          echo "> Auto-updated every 6 hours" >> Dashboard.md
+          echo "" >> Dashboard.md
+          echo "## 👀 Traffic Overview (Last 14 Days)" >> Dashboard.md
+          echo "" >> Dashboard.md
+          echo "| Metric | Value |" >> Dashboard.md
+          echo "|--------|-------|" >> Dashboard.md
+          echo "| 🔎 Total Views | **$VIEWS** |" >> Dashboard.md
+          echo "| 👤 Unique Visitors | **$UNIQUES** |" >> Dashboard.md
+          echo "| 📥 Total Clones | **$CLONES** |" >> Dashboard.md
+          echo "| 🧑‍💻 Unique Cloners | **$UNIQUE_CLONES** |" >> Dashboard.md
+          echo "" >> Dashboard.md
+          echo "## 📈 Daily Average (Approx)" >> Dashboard.md
+          echo "" >> Dashboard.md
+          echo "| Metric | Per Day |" >> Dashboard.md
+          echo "|--------|---------|" >> Dashboard.md
+          echo "| Views | **$((VIEWS / 14))** |" >> Dashboard.md
+          echo "| Clones | **$((CLONES / 14))** |" >> Dashboard.md
+          echo "" >> Dashboard.md
+          echo "_Last Updated: $(date -u) UTC_" >> Dashboard.md
 
       - name: Push Dashboard to Wiki
         run: |
@@ -79,5 +68,5 @@ EOF
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add Analytics-Dashboard.md
-          git commit -m "Auto update analytics dashboard" || echo "No changes"
+          git commit -m "Auto update analytics dashboard" || echo "No changes to commit"
           git push
