@@ -26,27 +26,36 @@ jobs:
           echo "${{ secrets.TRAFFIC_TOKEN }}" | gh auth login --with-token
 
       - name: Fetch Traffic Data
-        run: |
-          REPO="yashaswee-exe/AndroidGuides"
+  run: |
+    REPO="yashaswee-exe/AndroidGuides"
 
-          VIEWS=$(gh api repos/$REPO/traffic/views --jq '.count')
-          UNIQUES=$(gh api repos/$REPO/traffic/views --jq '.uniques')
+    VIEWS=$(curl -s \
+      -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/views | jq '.count')
 
-          CLONES=$(gh api repos/$REPO/traffic/clones --jq '.count')
-          UNIQUE_CLONES=$(gh api repos/$REPO/traffic/clones --jq '.uniques')
+    UNIQUES=$(curl -s \
+      -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/views | jq '.uniques')
 
-          echo "## 📊 Repository Traffic (Last 14 Days)" > Stats.md
-          echo "" >> Stats.md
-          echo "### 👀 Views" >> Stats.md
-          echo "- Total Views: **$VIEWS**" >> Stats.md
-          echo "- Unique Visitors: **$UNIQUES**" >> Stats.md
-          echo "" >> Stats.md
-          echo "### 📥 Clones" >> Stats.md
-          echo "- Total Clones: **$CLONES**" >> Stats.md
-          echo "- Unique Cloners: **$UNIQUE_CLONES**" >> Stats.md
-          echo "" >> Stats.md
-          echo "_Last Updated: $(date -u) UTC_" >> Stats.md
+    CLONES=$(curl -s \
+      -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/clones | jq '.count')
 
+    UNIQUE_CLONES=$(curl -s \
+      -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
+      https://api.github.com/repos/$REPO/traffic/clones | jq '.uniques')
+
+    echo "## 📊 Repository Traffic (Last 14 Days)" > Stats.md
+    echo "" >> Stats.md
+    echo "### 👀 Views" >> Stats.md
+    echo "- Total Views: **$VIEWS**" >> Stats.md
+    echo "- Unique Visitors: **$UNIQUES**" >> Stats.md
+    echo "" >> Stats.md
+    echo "### 📥 Clones" >> Stats.md
+    echo "- Total Clones: **$CLONES**" >> Stats.md
+    echo "- Unique Cloners: **$UNIQUE_CLONES**" >> Stats.md
+    echo "" >> Stats.md
+    echo "_Last Updated: $(date -u) UTC_" >> Stats.md
       - name: Clone Wiki
         run: |
           git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashaswee-exe/AndroidGuides.wiki.git
