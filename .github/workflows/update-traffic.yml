@@ -9,6 +9,9 @@ jobs:
   update-traffic:
     runs-on: ubuntu-latest
 
+    permissions:
+      content: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
