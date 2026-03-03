@@ -1,8 +1,8 @@
-name: Update Repository Traffic Stats
+name: Update Repository Analytics Dashboard
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */6 * * *'   # Every 6 hours
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Fetch Traffic Data
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Fetch Traffic Data & Generate Dashboard
         run: |
           REPO="yashaswee-exe/AndroidGuides"
 
@@ -36,6 +39,11 @@ jobs:
           cat <<EOF > Dashboard.md
           # 📊 AndroidGuides Analytics Dashboard
 
+          > Repository: yashaswee-exe/AndroidGuides  
+          > Auto-updated every 6 hours  
+
+          ---
+
           ## 👀 Traffic Overview (Last 14 Days)
 
           | Metric | Value |
@@ -45,22 +53,20 @@ jobs:
           | 📥 Total Clones | **$CLONES** |
           | 🧑‍💻 Unique Cloners | **$UNIQUE_CLONES** |
 
+          ---
+
+          ## 📈 Daily Average (Approx)
+
+          | Metric | Per Day |
+          |--------|--------|
+          | Views | **$((VIEWS / 14))** |
+          | Clones | **$((CLONES / 14))** |
+
+          ---
+
           _Last Updated: $(date -u) UTC_
+
           EOF
-
-      - name: Clone Wiki
-        run: |
-          git clone https://x-access-token:${{ secrets.TRAFFIC_TOKEN }}@github.com/yashaswee-exe/AndroidGuides.wiki.git
-
-      - name: Update Wiki Page
-        run: |
-          cp Dashboard.md AndroidGuides.wiki/Analytics-Dashboard.md
-          cd AndroidGuides.wiki
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add Analytics-Dashboard.md
-          git commit -m "Auto update analytics dashboard" || echo "No changes"
-          git push
 
       - name: Push Dashboard to Wiki
         run: |
@@ -70,5 +76,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add Analytics-Dashboard.md
-  git commit -m "Auto update analytics dashboard" || echo "No changes to commit"
-    git push
+          git commit -m "Auto update analytics dashboard" || echo "No changes to commit"
+          git push
