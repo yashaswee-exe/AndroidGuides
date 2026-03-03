@@ -1,7 +1,7 @@
+# 📚 Android Guides (Wiki Documentation)
+
 ## 📊 Repository Analytics
 [View Analytics Dashboard](https://github.com/yashaswee-exe/AndroidGuides/wiki/Analytics-Dashboard)
-
-## 📚 Android Guides (Wiki Documentation)
 
 Detailed Android modding, rooting & troubleshooting guides are hosted on my GitHub Wiki. Click any link below to explore a specific guide:
 
