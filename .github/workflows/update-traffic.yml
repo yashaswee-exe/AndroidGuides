@@ -26,16 +26,16 @@ jobs:
           REPO="yashaswee-exe/AndroidGuides"
 
           VIEWS=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/views | jq -r '.count')
-
+            https://api.github.com/repos/$REPO/traffic/views | jq '.count // 0')
+        
           UNIQUES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/views | jq -r '.uniques')
-
+            https://api.github.com/repos/$REPO/traffic/views | jq '.uniques // 0')
+          
           CLONES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/clones | jq -r '.count')
-
+            https://api.github.com/repos/$REPO/traffic/clones | jq '.count // 0')
+          
           UNIQUE_CLONES=$(curl -s -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/clones | jq -r '.uniques')
+            https://api.github.com/repos/$REPO/traffic/clones | jq '.uniques // 0')
 
           echo "# 📊 AndroidGuides Analytics Dashboard" > Dashboard.md
           echo "" >> Dashboard.md
