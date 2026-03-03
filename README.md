@@ -1,7 +1,7 @@
-## 📚 Android Guides (Wiki Documentation)
-
 ## 📊 Repository Analytics
-- [[Traffic Stats]]
+[View Analytics Dashboard](https://github.com/yashaswee-exe/AndroidGuides/wiki/Analytics-Dashboard)
+
+## 📚 Android Guides (Wiki Documentation)
 
 Detailed Android modding, rooting & troubleshooting guides are hosted on my GitHub Wiki. Click any link below to explore a specific guide:
 
@@ -17,3 +17,27 @@ Detailed Android modding, rooting & troubleshooting guides are hosted on my GitH
 - ⚙️ [OTA updating with root (KernelSU | Magisk)](../../wiki/OTA-updating-with-root-(KernelSU-%7C-Magisk))
 - 📌 [Root via KernelSU](../../wiki/Root-via-KernelSU)
 - 🧰 [SuperFlasher script for OP13R | Ace5](../../wiki/SuperFlasher-script-for-OP13R-%7C-Ace5)
+
+- # 📊 AndroidGuides Analytics Dashboard
+
+> Repository: yashaswee-exe/AndroidGuides
+> Auto-updated every 6 hours
+
+## 👀 Traffic Overview (Last 14 Days)
+
+| Metric | Value |
+|--------|-------|
+| 🔎 Total Views | **null** |
+| 👤 Unique Visitors | **null** |
+| 📥 Total Clones | **null** |
+| 🧑‍💻 Unique Cloners | **null** |
+
+## 📈 Daily Average (Approx)
+
+| Metric | Per Day |
+|--------|---------|
+| Views | **0** |
+| Clones | **0** |
+
+_Last Updated: Tue Mar  3 18:35:18 UTC 2026 UTC_
+
