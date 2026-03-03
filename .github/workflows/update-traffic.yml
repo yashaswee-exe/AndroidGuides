@@ -2,7 +2,7 @@ name: Update Repository Analytics Dashboard
 
 on:
   schedule:
-    - cron: '0 */6 * * *'   # Every 6 hours
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install jq
-        run: sudo apt-get install -y jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Fetch Traffic Data & Generate Dashboard
         run: |
@@ -40,106 +40,36 @@ jobs:
             https://api.github.com/repos/$REPO/traffic/clones | jq '.uniques')
 
           cat <<EOF > Dashboard.md
-          # 📊 AndroidGuides Analytics Dashboard
+# 📊 AndroidGuides Analytics Dashboard
 
-          > Repository: yashaswee-exe/AndroidGuides  
-          > Auto-updated every 6 hours  
+> Repository: yashaswee-exe/AndroidGuides  
+> Auto-updated every 6 hours  
 
-          ---
+---
 
-          ## 👀 Traffic Overview (Last 14 Days)
+## 👀 Traffic Overview (Last 14 Days)
 
-          | Metric | Value |
-          |--------|-------|
-          | 🔎 Total Views | **$VIEWS** |
-          | 👤 Unique Visitors | **$UNIQUES** |
-          | 📥 Total Clones | **$CLONES** |
-          | 🧑‍💻 Unique Cloners | **$UNIQUE_CLONES** |
+| Metric | Value |
+|--------|-------|
+| 🔎 Total Views | **$VIEWS** |
+| 👤 Unique Visitors | **$UNIQUES** |
+| 📥 Total Clones | **$CLONES** |
+| 🧑‍💻 Unique Cloners | **$UNIQUE_CLONES** |
 
-          ---
+---
 
-          ## 📈 Daily Average (Approx)
+## 📈 Daily Average (Approx)
 
-          | Metric | Per Day |
-          |--------|--------|
-          | Views | **$((VIEWS / 14))** |
-          | Clones | **$((CLONES / 14))** |
+| Metric | Per Day |
+|--------|--------|
+| Views | **$((VIEWS / 14))** |
+| Clones | **$((CLONES / 14))** |
 
-          ---
+---
 
-          _Last Updated: $(date -u) UTC_
+_Last Updated: $(date -u) UTC_
 
-          EOF
-
-      name: Update Repository Analytics Dashboard
-
-on:
-  schedule:
-    - cron: '0 */6 * * *'   # Every 6 hours
-  workflow_dispatch:
-
-jobs:
-  update-traffic:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - name: Fetch Traffic Data & Generate Dashboard
-        run: |
-          REPO="yashaswee-exe/AndroidGuides"
-
-          VIEWS=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/views | jq '.count')
-
-          UNIQUES=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/views | jq '.uniques')
-
-          CLONES=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/clones | jq '.count')
-
-          UNIQUE_CLONES=$(curl -s \
-            -H "Authorization: token ${{ secrets.TRAFFIC_TOKEN }}" \
-            https://api.github.com/repos/$REPO/traffic/clones | jq '.uniques')
-
-          cat <<EOF > Dashboard.md
-          # 📊 AndroidGuides Analytics Dashboard
-
-          > Repository: yashaswee-exe/AndroidGuides  
-          > Auto-updated every 6 hours  
-
-          ---
-
-          ## 👀 Traffic Overview (Last 14 Days)
-
-          | Metric | Value |
-          |--------|-------|
-          | 🔎 Total Views | **$VIEWS** |
-          | 👤 Unique Visitors | **$UNIQUES** |
-          | 📥 Total Clones | **$CLONES** |
-          | 🧑‍💻 Unique Cloners | **$UNIQUE_CLONES** |
-
-          ---
-
-          ## 📈 Daily Average (Approx)
-
-          | Metric | Per Day |
-          |--------|--------|
-          | Views | **$((VIEWS / 14))** |
-          | Clones | **$((CLONES / 14))** |
-
-          ---
-
-          _Last Updated: $(date -u) UTC_
-
-          EOF
+EOF
 
       - name: Push Dashboard to Wiki
         run: |
@@ -149,7 +79,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add Analytics-Dashboard.md
-          git commit -m "Auto update analytics dashboard" || echo "No changes to commit"
-          git push
-          git commit -m "Auto update analytics dashboard" || echo "No changes to commit"
+          git commit -m "Auto update analytics dashboard" || echo "No changes"
           git push
