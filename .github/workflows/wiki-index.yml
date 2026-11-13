@@ -1,0 +1,40 @@
+name: Update README wiki index
+
+on:
+  gollum:            # wiki page created or edited
+  schedule:
+    - cron: '0 */6 * * *'   # fallback, in case an event is missed
+  workflow_dispatch:        # manual run button
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+        with:
+          path: repo
+
+      - name: Checkout wiki
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+
+      - name: Generate index
+        run: python3 repo/.github/scripts/update_readme.py
+
+      - name: Commit if changed
+        working-directory: repo
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Update wiki page index"
+          git push
