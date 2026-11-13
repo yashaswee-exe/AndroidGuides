@@ -1,9 +1,4 @@
-Step-by-step guides for unlocking, rooting, flashing and other tutorials
-for Android devices, mainly **OnePlus devices**, you can [find here](https://github.com/yashaswee-exe/AndroidGuides/wiki).
-
----
-
-### 📚 Here are the Guides
+### 📚 Tutorials
 
 <!-- WIKI-PAGES:START -->
 - [\[No‐Root\] How to hide enabled developer options](https://github.com/yashaswee-exe/AndroidGuides/wiki/%5BNo%E2%80%90Root%5D-How-to-hide-enabled-developer-options)
