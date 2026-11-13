@@ -9,7 +9,7 @@
 - [Fixing bootloader on ColorOS17](https://github.com/yashaswee-exe/AndroidGuides/wiki/Fixing-bootloader-on-ColorOS17)
 - [Flashing custom ROMs on a OnePlus 13R Ace5](https://github.com/yashaswee-exe/AndroidGuides/wiki/Flashing-custom-ROMs-on-a-OnePlus-13R-Ace5)
 - [Flashing firmware using FFF Tool](https://github.com/yashaswee-exe/AndroidGuides/wiki/Flashing-firmware-using-FFF-Tool)
-- [Flasing Custom ROMs on Oneplus 10R & Ace](https://github.com/yashaswee-exe/AndroidGuides/wiki/Flasing-Custom-ROMs-on-Oneplus-10R-%26-Ace)
+- [Flashing Custom ROMs on Oneplus 10R & Ace](https://github.com/yashaswee-exe/AndroidGuides/wiki/Flasing-Custom-ROMs-on-Oneplus-10R-%26-Ace)
 - [Hide root detections](https://github.com/yashaswee-exe/AndroidGuides/wiki/Hide-root-detections)
 - [Root via KernelSU](https://github.com/yashaswee-exe/AndroidGuides/wiki/Root-via-KernelSU)
 - [Unlocking bootloader on a OnePlus device](https://github.com/yashaswee-exe/AndroidGuides/wiki/Unlocking-bootloader-on-a-OnePlus-device)
@@ -18,6 +18,6 @@
 ---
 
 ### 🤝 Contributing
-Found a mistake or a step that no longer works? [Open an issue](https://github.com/yashaswee-exe/AndroidGuides/issues) or find me [here](https://t.me/AlphaHelpsChat).
+Found a mistake or a step that no longer works? [Open an issue](https://github.com/yashaswee-exe/AndroidGuides/issues) or find me [here on Telegram](https://t.me/AlphaHelpsChat).
 
 ---
