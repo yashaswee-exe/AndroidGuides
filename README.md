@@ -18,6 +18,6 @@
 ---
 
 ### 🤝 Contributing
-Found a mistake or a step that no longer works? [Open an issue](https://github.com/yashaswee-exe/AndroidGuides/issues) or find me [here](https://t.me/yashaswee).
+Found a mistake or a step that no longer works? [Open an issue](https://github.com/yashaswee-exe/AndroidGuides/issues) or find me [here](https://t.me/AlphaHelpsChat).
 
 ---
